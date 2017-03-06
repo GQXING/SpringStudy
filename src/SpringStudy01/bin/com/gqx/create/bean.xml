@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 1、默认无参的构造器 -->
+	<bean id="user1" class="com.gqx.create.User" ></bean>
+	
+	
+	<!-- 2、带构造器的参数 参数位置不可以换，除非指定了索引
+	<bean id="user" class="com.gqx.create.User">
+		 <constructor-arg value="100" index="0" type="int" ></constructor-arg>
+		 <constructor-arg val  ue="gqxing" index="1" type="java.lang.String" ></constructor-arg>
+	</bean> 
+	-->
+	  <!-- 2.1 ref的使用 -->
+		<!-- 定义一个字符串。值是gqxing -->
+		<bean id="str" class="java.lang.String">
+			<constructor-arg value="gqxing"></constructor-arg>
+		</bean>
+		<bean id="user2" class="com.gqx.create.User">
+			 <constructor-arg value="100" index="0" type="int" ></constructor-arg>
+			 <constructor-arg index="1" ref="str" type="java.lang.String" ></constructor-arg>
+		</bean>
+		
+	<!-- 3、工厂类创建对象 -->
+		<!-- #工厂类，实例方法 -->
+		<!-- 先创建工厂 -->
+	<bean id="factory" class="com.gqx.create.ObjectFactory"></bean>
+	<!-- 在创建工厂，用factory的实例方法 -->
+	<bean id="user3" factory-method="getInstance" factory-bean="factory" ></bean>
+		<!-- 工厂类：静态方法 -->
+	<bean id="user" class="com.gqx.create.ObjectFactory" factory-method="getStaticInstance"></bean>
+</beans>
+     

@@ -1,0 +1,10 @@
+package com.gqx.f_aop_xml;
+/**
+ * ½Ó¿Ú
+ * @author ¹ùÇìÐË
+ *
+ */
+public interface IUserDao {
+	
+	void save();
+}

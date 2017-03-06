@@ -1,0 +1,20 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</property>
+		
+		<!-- 常规配置 -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+		<!-- 本地jdbc事务配置,你通过getCurrentSession创建的session会绑定到当前线程 -->
+		<!-- <property name="hibernate.current_session_context_class">thread</property> -->
+		<!-- 2.3 自动建表  -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		
+		<!-- 映射 -->
+		<mapping resource="com/gqx/entity/Dept.hbm.xml"/>
+	</session-factory>
+</hibernate-configuration>

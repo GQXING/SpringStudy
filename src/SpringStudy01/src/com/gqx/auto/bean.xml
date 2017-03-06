@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+		default-autowire="byName"
+        >
+
+	<!-- **********自动装配********* -->
+	<!--   
+		根据“名称”自动装配：userAction注入的属性会去IOC容器中自动查找与属性同名的对象
+	 --> 
+	<bean id="userDao" class="com.gqx.auto.UserDao"></bean>
+	<bean id="service" class="com.gqx.auto.UserService" ></bean>
+	<!-- 如果个根据类型自动装配，必须确保IOC容器中 -->
+	<bean id="userAction" class="com.gqx.auto.UserAction" ></bean>
+	 
+</beans>
+     

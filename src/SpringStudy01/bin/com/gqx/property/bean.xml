@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- **********对象属性赋值********* -->
+	<!-- 1、通过构造函数 -->
+	<bean id="user1" class="com.gqx.property.User">
+		<constructor-arg value="100"></constructor-arg>
+		<constructor-arg value="gqxing"></constructor-arg>
+	</bean>
+
+
+
+	<!-- 2、通过set方法给属性赋值 -->
+	<bean id="user" class="com.gqx.property.User">
+		<property name="id" value="101"></property>
+		<property name="name" value="test"></property>
+	</bean>
+
+	<!-- 案例： action/service/dao -->
+
+	<!-- dao Instance -->
+	<bean id="userDao" class="com.gqx.property.UserDao"></bean>
+
+	<!-- service Instance -->
+	<bean id="userService" class="com.gqx.property.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>
+
+	<!-- action instance -->
+	<bean id="userAction" class="com.gqx.property.UserAction">
+		<property name="service" ref="userService"></property>
+	</bean>
+
+	<!-- 也可以使用***内部bean**** -->
+	<!-- 
+	<bean id="userAction" class="com.gqx.property.UserAction">
+		<property name="service">
+			<bean id="userService" class="com.gqx.property.UserService">
+				<property name="userDao">
+					<bean class="com.gqx.property.UserDao"></bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	 -->
+	 
+</beans>
+     

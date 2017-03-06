@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    	 http://www.springframework.org/schema/beans/spring-beans.xsd
+     	 http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context.xsd
+         http://www.springframework.org/schema/aop
+         http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/tx
+     	 http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- dao实例 -->
+	<bean id="deptDao" class="com.gqx.dao.DeptDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- service实例 -->
+	<bean id="deptService" class="com.gqx.service.DeptService">
+		<property name="deptDao" ref="deptDao"></property>
+	</bean>
+
+	<!-- ########0####Spring和Hibernate整合################ -->
+	<!-- 方式一：直接加载hibernate.cfg.xml文件的方式整合 -->
+	<!-- SessionFactory类是接口，而注入的必须是实现类，所以要用LocalSessionFactoryBean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation" value="hibernate.cfg.xml"></property>
+	</bean>
+
+
+	<!-- 事物配置 -->
+	<!-- a、配置事物管理器类 Spring声明式事务管理器类： Jdbc技术：DataSourceTransactionManager Hibernate技术：HibernateTransactionManager -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- b、配置事物增强（拦截方法后如何管理事物） -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" read-only="false" />
+		</tx:attributes>
+	</tx:advice>
+	<!-- c、aop配置 -->
+	<aop:config>
+		<aop:pointcut expression="execution(* com.gqx.service.DeptService.*(..))"
+			id="pc" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pc" />
+	</aop:config>
+</beans>
+     
